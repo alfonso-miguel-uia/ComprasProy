@@ -26,6 +26,7 @@ public class GestorCompras {
 	//private ListaKClientes miReportname = "Cartucho Tóner"eNS;
     private ListaReportesNivelStock miReporteNS;
     private PeticionOrdenCompra miPeticionOC = new PeticionOrdenCompra();
+    private Comprador miComprador = new Comprador();
 
 	public GestorCompras() 
 	{
@@ -62,7 +63,25 @@ public class GestorCompras {
 
 
             try {
-                mapper.writeValue(new FileOutputStream("C:\\TSU-2022\\ComprasProy\\peticionOrdenCompraV2.json"), miPeticionOC);
+                mapper.writeValue(new FileOutputStream("C:\\TSU-2022\\ComprasProy\\peticionOrdenCompraV1.json"), miPeticionOC);
+            }
+            catch (JsonParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            catch (JsonMappingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            miComprador.hazSolicitudOrdenCompra(miPeticionOC);
+
+            try {
+                mapper.writeValue(new FileOutputStream("C:\\TSU-2022\\ComprasProy\\solicitudOrdenCompraV1.json"), miPeticionOC);
             }
             catch (JsonParseException e) {
                 // TODO Auto-generated catch block

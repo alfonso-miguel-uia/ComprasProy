@@ -1,0 +1,1 @@
+{"type":"PeticionOrdenCompra","id":-1,"name":"","codigo":"","unidad":"","cantidad":0,"descripcion":"","pedidoProveedor":0,"clasificacion":-1,"items":[{"type":"PeticionOrdenCompra","id":0,"name":"Papel Bond","codigo":"","unidad":"PZA","cantidad":50000,"descripcion":"","pedidoProveedor":0,"clasificacion":1,"items":null}]}

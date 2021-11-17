@@ -10,7 +10,7 @@
             "existencia inicial": 8,
             "existencia mínima": 10,
             "consumo mensual": 5,
-            "pedidoProveedor": 5
+            "pedidoProveedor": 0
         }, {
             "type": "reporteNS",
             "name": "Cartucho Tinta",
@@ -23,13 +23,15 @@
         }, {
             "type": "reporteNS",
             "descripción": "CD",
+            "name": "CD",
             "existencia inicial": 400,
             "existencia mínima": 350,
             "consumo mensual": 50,
-            "pedidoProveedor": 100
+            "pedidoProveedor": 0
         }, {
             "type": "reporteNS",
             "descripción": "Papel Bond",
+            "name": "Papel Bond",
             "existencia inicial": 70000,
             "existencia mínima": 60000,
             "consumo mensual": 58000,

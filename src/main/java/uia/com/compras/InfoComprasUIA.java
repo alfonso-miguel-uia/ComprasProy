@@ -20,9 +20,9 @@ public class InfoComprasUIA {
 
 	private int id;
 	private String name="";
-	private String type="";
 	private String descripcion="";
 	private int pedidoProveedor=0;
+	private int clasificacion=-1;
 	private List<InfoComprasUIA> items;
 
 
@@ -73,13 +73,6 @@ public class InfoComprasUIA {
 		this.items =  items;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public void print() {
 		System.out.println(this);
@@ -87,4 +80,12 @@ public class InfoComprasUIA {
 		System.out.println("Name:\t" + this.getName());
 	}
 
+	public int getClasificacion() {
+		return clasificacion;
+	}
+
+	public void setClasificacion(int i)
+	{
+			this.clasificacion=i;
+	}
 }
