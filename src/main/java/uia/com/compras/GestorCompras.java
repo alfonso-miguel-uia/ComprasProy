@@ -63,14 +63,14 @@ public class GestorCompras {
             miComprador.hazSolicitudOrdenCompra(miPeticionOC);
         }
 
-        miSolicituOC=miComprador.buscaProveedor(miPeticionOC);
-        miComprador.agrupaProveedores(miSolicituOC);
+        miSolicituOC=miComprador.buscaVendedor(miPeticionOC);
+        miComprador.agrupaVendedores(miSolicituOC);
 
-        for (Entry<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>> item : miComprador.getProveedores().entrySet())
+        for (Entry<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>> item : miComprador.getVendedores().entrySet())
         {
-            int iProveedor = item.getKey();
+            int iVendedor = item.getKey();
              HashMap<Integer, ArrayList<InfoComprasUIA>> nodo = item.getValue();
-             mapper.writeValue(new File("C:/TSU-2022/ComprasProy/SolicitudOrdenCompra-Proveedor-"+iProveedor+".json"), nodo);
+             mapper.writeValue(new File("C:/TSU-2022/ComprasProy/SolicitudOrdenCompra-Vendedor-"+iVendedor+".json"), nodo);
         }
 
 	}

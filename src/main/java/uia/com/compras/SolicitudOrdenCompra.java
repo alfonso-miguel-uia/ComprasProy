@@ -5,15 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SolicitudOrdenCompra extends PeticionOrdenCompra
 {
-    private int proveedor=-1;
+    private int vendedor=-1;
 
     @JsonCreator
     public SolicitudOrdenCompra(@JsonProperty("id")int id, @JsonProperty("name")String name,
                                @JsonProperty("codigo")String codigo, @JsonProperty("unidad")String unidad,
-                               @JsonProperty("cantidad")int cantidad, @JsonProperty("proveedor")int proveedor,@JsonProperty("clasificacionProveedor")int clasificacionProveedor)
+                               @JsonProperty("cantidad")int cantidad, @JsonProperty("vendedor")int vendedor,@JsonProperty("clasificacionProveedor")int clasificacionVendedor)
     {
         super(id, name, codigo, unidad, cantidad);
-        this.proveedor = proveedor;
+        this.vendedor = vendedor;
     }
 
     public SolicitudOrdenCompra(PeticionOrdenCompra info)
@@ -26,12 +26,12 @@ public class SolicitudOrdenCompra extends PeticionOrdenCompra
 
     }
 
-    public int getProveedor() {
-        return proveedor;
+    public int getVendedor() {
+        return vendedor;
     }
 
-    public void setProveedor(int proveedor) {
-        this.proveedor = proveedor;
+    public void setVendedor(int vendedor) {
+        this.vendedor = vendedor;
     }
 
 }
