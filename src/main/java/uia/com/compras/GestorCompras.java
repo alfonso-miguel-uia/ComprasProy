@@ -23,13 +23,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
  */
 public class GestorCompras {
 	private int opcion;
-	//private ListaKClientes miReportname = "Cartucho Tóner"eNS;
     private ListaReportesNivelStock miReporteNS;
     private PeticionOrdenCompra miPeticionOC = new PeticionOrdenCompra();
+    private PeticionOrdenCompra miSolicituOC;
     private Comprador miComprador = new Comprador();
 
-	public GestorCompras() 
-	{
+	public GestorCompras() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         
         try {
@@ -61,40 +60,17 @@ public class GestorCompras {
                 miNodo.print();
             }
 
-
-            try {
-                mapper.writeValue(new FileOutputStream("C:\\TSU-2022\\ComprasProy\\peticionOrdenCompraV1.json"), miPeticionOC);
-            }
-            catch (JsonParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (JsonMappingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
             miComprador.hazSolicitudOrdenCompra(miPeticionOC);
+        }
 
-            try {
-                mapper.writeValue(new FileOutputStream("C:\\TSU-2022\\ComprasProy\\solicitudOrdenCompraV1.json"), miPeticionOC);
-            }
-            catch (JsonParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (JsonMappingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+        miSolicituOC=miComprador.buscaProveedor(miPeticionOC);
+        miComprador.agrupaProveedores(miSolicituOC);
+
+        for (Entry<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>> item : miComprador.getProveedores().entrySet())
+        {
+            int iProveedor = item.getKey();
+             HashMap<Integer, ArrayList<InfoComprasUIA>> nodo = item.getValue();
+             mapper.writeValue(new File("C:/TSU-2022/ComprasProy/SolicitudOrdenCompra-Proveedor-"+iProveedor+".json"), nodo);
         }
 
 	}

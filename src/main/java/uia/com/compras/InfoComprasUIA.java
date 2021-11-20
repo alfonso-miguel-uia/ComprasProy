@@ -13,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 	    property = "type")
 	@JsonSubTypes({
 	    @Type(value = ReporteNivelStock.class, name = "reporteNS"),
-		@Type(value = ReporteNivelStock.class, name = "itemsPOC")
+		@Type(value = PeticionOrdenCompra.class, name = "PeticionOrdenCompra"),
+		@Type(value = SolicitudOrdenCompra.class, name = "SolicitudOrdenCompra")
 	    })
 
 public class InfoComprasUIA {
