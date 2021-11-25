@@ -1,0 +1,1 @@
+{"type":"SolicitudOrdenCompra","id":2100,"name":"SOC-2100","codigo":"","unidad":"","cantidad":0,"vendedor":2,"descripcion":"","pedidoProveedor":0,"clasificacion":-1,"items":[{"type":"SolicitudOrdenCompra","id":0,"name":"CD","codigo":"","unidad":"PZA","cantidad":200,"vendedor":2,"descripcion":"","pedidoProveedor":0,"clasificacion":2,"items":null}]}

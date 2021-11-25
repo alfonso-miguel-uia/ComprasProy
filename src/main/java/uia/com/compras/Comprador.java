@@ -1,5 +1,8 @@
 package uia.com.compras;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,9 +10,40 @@ import java.util.Map;
 
 public class Comprador {
 
-    private int clasificacion = 0;
 
-    protected HashMap<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>> vendedores = new HashMap<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>>();
+    private int clasificacion = 0;
+    private int minVendedor = 10;
+    private int maxVendedor = 13;
+
+    protected HashMap<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>> solicitudesOrdenCompraAgrupadosXvendedores = new HashMap<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>>();
+    protected HashMap<Integer, ArrayList<Cotizacion>> cotizaciones = new HashMap<Integer, ArrayList<Cotizacion>>();
+    protected ArrayList<Vendedor> vendedores = new ArrayList<Vendedor>();
+
+
+    public Comprador()
+    {
+        for(int i=this.minVendedor; i<this.maxVendedor; i++) {
+            Vendedor newVendedor = new Vendedor(i);
+            this.vendedores.add(newVendedor);
+        }
+    }
+
+
+    public HashMap<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>> getSolicitudesOrdenCompraAgrupadosXvendedores() {
+        return solicitudesOrdenCompraAgrupadosXvendedores;
+    }
+
+    public void setSolicitudesOrdenCompraAgrupadosXvendedores(HashMap<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>> solicitudesOrdenCompraAgrupadosXvendedores) {
+        this.solicitudesOrdenCompraAgrupadosXvendedores = solicitudesOrdenCompraAgrupadosXvendedores;
+    }
+
+    public HashMap<Integer, ArrayList<Cotizacion>> getCotizaciones() {
+        return cotizaciones;
+    }
+
+    public void setCotizaciones(HashMap<Integer, ArrayList<Cotizacion>> cotizaciones) {
+        this.cotizaciones = cotizaciones;
+    }
 
     public int getClasificacion() {
         return clasificacion;
@@ -19,13 +53,6 @@ public class Comprador {
         this.clasificacion = clasificacion;
     }
 
-    public HashMap<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>> getVendedores() {
-        return vendedores;
-    }
-
-    public void setVendedores(HashMap<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>> vendedores) {
-        this.vendedores = vendedores;
-    }
 
     public void hazSolicitudOrdenCompra(PeticionOrdenCompra miPeticionOC) {
         validaExistencia(miPeticionOC);
@@ -91,31 +118,57 @@ public class Comprador {
         int key = 0;
         int keyLista = -1;
 
-        if (vendedores == null)
-            vendedores = new HashMap<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>>();
+        if (solicitudesOrdenCompraAgrupadosXvendedores == null)
+            solicitudesOrdenCompraAgrupadosXvendedores = new HashMap<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>>();
 
         for (int i = 0; i < peticionOC.getItems().size(); i++) {
             newItem = (SolicitudOrdenCompra) peticionOC.getItems().get(i);
             key = newItem.getVendedor();
             keyLista = i % 3;
 
-            if (vendedores.containsKey(key)) {
-                if (vendedores.get(key).containsKey(keyLista)) {
-                    vendedores.get(key).get(keyLista).add(newItem);
+            if (solicitudesOrdenCompraAgrupadosXvendedores.containsKey(key)) {
+                if (solicitudesOrdenCompraAgrupadosXvendedores.get(key).containsKey(keyLista)) {
+                    solicitudesOrdenCompraAgrupadosXvendedores.get(key).get(keyLista).add(newItem);
                 } else {
                     ArrayList<InfoComprasUIA> newLista = new ArrayList<InfoComprasUIA>();
                     newLista.add(newItem);
                     HashMap<Integer, ArrayList<InfoComprasUIA>> nodo = new HashMap<Integer, ArrayList<InfoComprasUIA>>();
                     nodo.put(i, newLista);
-                    vendedores.put(key, nodo);
+                    solicitudesOrdenCompraAgrupadosXvendedores.put(key, nodo);
                 }
             } else {
                 ArrayList<InfoComprasUIA> newLista = new ArrayList<InfoComprasUIA>();
                 newLista.add(newItem);
                 HashMap<Integer, ArrayList<InfoComprasUIA>> nodo = new HashMap<Integer, ArrayList<InfoComprasUIA>>();
                 nodo.put(keyLista, newLista);
-                vendedores.put(key, nodo);
+                solicitudesOrdenCompraAgrupadosXvendedores.put(key, nodo);
             }
         }
     }
+
+    public HashMap<Integer, ArrayList<Cotizacion>> hazCotizaciones(ArrayList<SolicitudOrdenCompra> misSolicitudesOC, ObjectMapper mapper) throws IOException {
+        Cotizacion newItem = null;
+        Vendedor newVendedor = null;
+        Cotizacion newCotizacion;
+        int key = 0;
+        int keyLista = -1;
+
+
+        for (int i = 0; i < misSolicitudesOC.size(); i++)
+        {
+            ArrayList<Cotizacion> listaCotizaciones = new ArrayList<Cotizacion>();
+
+            for(int j=0; j<vendedores.size(); j++)
+            {
+                Vendedor vendedor = vendedores.get(j);
+                newCotizacion = (Cotizacion) vendedor.cotiza(misSolicitudesOC.get(i), mapper);
+                listaCotizaciones.add(newCotizacion);
+            }
+            this.cotizaciones.put(i, listaCotizaciones);
+        }
+
+        return this.cotizaciones;
+    }
+
+
 }

@@ -22,6 +22,8 @@ public class SolicitudOrdenCompra extends PeticionOrdenCompra
         this.setClasificacion(info.getClasificacion());
     }
 
+
+
     public SolicitudOrdenCompra() {
 
     }

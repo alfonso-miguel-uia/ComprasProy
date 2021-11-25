@@ -1,0 +1,1 @@
+{"type":"SolicitudOrdenCompra","id":1100,"name":"SOC-1100","codigo":"","unidad":"","cantidad":0,"vendedor":1,"descripcion":"","pedidoProveedor":0,"clasificacion":-1,"items":[{"type":"SolicitudOrdenCompra","id":0,"name":"Cartucho Tinta","codigo":"","unidad":"PZA","cantidad":5,"vendedor":1,"descripcion":"","pedidoProveedor":0,"clasificacion":1,"items":null}]}
