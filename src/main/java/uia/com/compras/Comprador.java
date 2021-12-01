@@ -2,6 +2,7 @@ package uia.com.compras;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ public class Comprador {
 
     protected HashMap<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>> solicitudesOrdenCompraAgrupadosXvendedores = new HashMap<Integer, HashMap<Integer, ArrayList<InfoComprasUIA>>>();
     protected HashMap<Integer, ArrayList<Cotizacion>> cotizaciones = new HashMap<Integer, ArrayList<Cotizacion>>();
+    protected HashMap<Integer, Cotizacion> cotizacionesVendedoresSeleccionados = new HashMap<Integer, Cotizacion>();
     protected ArrayList<Vendedor> vendedores = new ArrayList<Vendedor>();
 
 
@@ -170,5 +172,30 @@ public class Comprador {
         return this.cotizaciones;
     }
 
+
+    public HashMap<Integer, Cotizacion> seleccionaVendedores(HashMap<Integer, ArrayList<Cotizacion>> misCotizaciones, ObjectMapper mapper) throws IOException {
+        double monto =  Double.MAX_VALUE;
+        double newMonto;
+        int iMonto = -1;
+        ArrayList<Cotizacion> listaCotizaciones;
+
+        for (Map.Entry<Integer, ArrayList<Cotizacion>> nodo : misCotizaciones.entrySet())
+        {
+            listaCotizaciones = nodo.getValue();
+
+            for(int i=0; i<listaCotizaciones.size(); i++)
+            {
+                newMonto = listaCotizaciones.get(i).getTotal();
+                if(newMonto < monto) {
+                    monto = newMonto;
+                    iMonto = i;
+                }
+            }
+            cotizacionesVendedoresSeleccionados.put(nodo.getKey(), listaCotizaciones.get(iMonto));
+            mapper.writeValue(new File("C:/TSU-2022/ComprasProy/" + listaCotizaciones.get(iMonto).getName() +"-vendedorSeleccionado-"+listaCotizaciones.get(iMonto).getId() +".json"), Cotizacion.class);
+        }
+
+        return this.cotizacionesVendedoresSeleccionados;
+    }
 
 }

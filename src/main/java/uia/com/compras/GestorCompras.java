@@ -25,6 +25,7 @@ public class GestorCompras {
     private SolicitudOrdenCompra miSolicituOC;
     private Comprador miComprador = new Comprador();
     private ArrayList<SolicitudOrdenCompra> misSolicitudesOC;
+    private HashMap<Integer, ArrayList<Cotizacion>> misSolicitudesCotizacionte;
 
 
     public GestorCompras() throws IOException {
@@ -93,6 +94,7 @@ public class GestorCompras {
         //--Envio a Comprador las cotizacion para que genere al menos 3 cotizaciones con vendedores diferentes (0-4)
         HashMap<Integer, ArrayList<Cotizacion>> misSolicitudesCotizacion =  miComprador.hazCotizaciones(misSolicitudesOC, mapper);
 
+        HashMap<Integer, Cotizacion> misSolicitudesOrdenCompra =  miComprador.seleccionaVendedores(misSolicitudesCotizacion, mapper);
 
 	}
 
