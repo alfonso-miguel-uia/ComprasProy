@@ -24,6 +24,7 @@ public class InfoComprasUIA {
 	private String descripcion="";
 	private int pedidoProveedor=0;
 	private int clasificacion=-1;
+	private int vendedor=-1;
 	private List<InfoComprasUIA> items;
 
 
@@ -88,5 +89,9 @@ public class InfoComprasUIA {
 	public void setClasificacion(int i)
 	{
 			this.clasificacion=i;
+	}
+
+	public int getVendedor() {
+		return this.vendedor;
 	}
 }

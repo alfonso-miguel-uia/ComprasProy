@@ -177,6 +177,7 @@ public class Comprador {
         double monto =  Double.MAX_VALUE;
         double newMonto;
         int iMonto = -1;
+        int iVendedor=-1;
         ArrayList<Cotizacion> listaCotizaciones;
 
         for (Map.Entry<Integer, ArrayList<Cotizacion>> nodo : misCotizaciones.entrySet())
@@ -189,10 +190,16 @@ public class Comprador {
                 if(newMonto < monto) {
                     monto = newMonto;
                     iMonto = i;
+                    iVendedor = listaCotizaciones.get(i).getItems().get(0).getVendedor();
                 }
             }
+            listaCotizaciones.get(iMonto).setVendedor(iVendedor);
             cotizacionesVendedoresSeleccionados.put(nodo.getKey(), listaCotizaciones.get(iMonto));
-            mapper.writeValue(new File("C:/TSU-2022/ComprasProy/" + listaCotizaciones.get(iMonto).getName() +"-vendedorSeleccionado-"+listaCotizaciones.get(iMonto).getId() +".json"), Cotizacion.class);
+        }
+
+        for (Map.Entry<Integer, Cotizacion> nodo : this.cotizacionesVendedoresSeleccionados.entrySet())
+        {
+            mapper.writeValue(new File("C:/TSU-2022/ComprasProy/" + nodo.getValue().getName() + "-vendedorSeleccionado-" + nodo.getValue().getVendedor() + ".json"), nodo.getValue());
         }
 
         return this.cotizacionesVendedoresSeleccionados;
